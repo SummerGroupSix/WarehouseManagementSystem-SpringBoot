@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yndarksy.maven.summer.userserver.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="ResultMap" type="com.yndarksy.maven.summer.userserver.entity.User">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="age" property="age" />
+        <result column="password" property="password" />
+        <result column="sex" property="sex" />
+        <result column="address" property="address" />
+        <result column="img_url" property="imgUrl" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="operator" property="operator" />
+
+        <collection property="roleList" ofType="com.yndarksy.maven.summer.userserver.entity.Role">
+            <id column="id" property="id"/>
+            <result column="role_code" property="roleCode"/>
+            <result column="role_name" property="roleName"/>
+            <result column="create_time" property="createTime"/>
+            <result column="create_by" property="createBy"/>
+            <result column="update_time" property="updateTime"/>
+            <result column="operator" property="operator"/>
+        </collection>
+
+        <collection property="permissionList" ofType="com.yndarksy.maven.summer.userserver.entity.Permission">
+            <id column="id" property="id"/>
+            <result column="perm_name" property="permName"/>
+            <result column="parent_id" property="parentId"/>
+            <result column="perm_key" property="permKey"/>
+            <result column="perm_url" property="permUrl"/>
+            <result column="create_time" property="createTime"/>
+            <result column="create_by" property="createBy"/>
+            <result column="update_time" property="updateTime"/>
+            <result column="operator" property="operator"/>
+            <result column="perm_type" property="permType"/>
+        </collection>
+    </resultMap>
+    
+    <resultMap id="userPermTreeResultMap" type="com.yndarksy.maven.summer.userserver.vo.UserPermTree">
+        <id column="id" property="id"/>
+        <result column="perm_name" property="permName"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="perm_key" property="permKey"/>
+        <result column="perm_url" property="permUrl"/>
+        <collection property="children" column="{id=id}" ofType="com.yndarksy.maven.summer.userserver.vo.UserPermTree" select="selectChildPermTree">
+            <id column="id" property="id"/>
+            <result column="perm_name" property="permName"/>
+            <result column="parent_id" property="parentId"/>
+            <result column="perm_key" property="permKey"/>
+            <result column="perm_url" property="permUrl"/>
+        </collection>
+    </resultMap>
+
+    <!-- 根据userid查询用户权限 -->
+    <select id="selectUser" resultMap="ResultMap">
+        SELECT
+        *
+        FROM user as u
+        INNER JOIN user_role ur on u.id = ur.user_id
+        INNER JOIN role r on ur.role_id = r.id
+        INNER JOIN role_perm rp on rp.role_id = r.id
+        INNER JOIN permission p on p.id = rp.perm_iddui
+        where    u.username = #{username}
+    </select>
+
+    <select id="selectUserPermTreeByUserId" resultMap="userPermTreeResultMap">
+        SELECT
+        p.id,
+        p.perm_name,
+        p.perm_type,
+        p.perm_key,
+        p.perm_url
+        FROM user as u
+        INNER JOIN user_role ur on u.id = ur.user_id
+        INNER JOIN role r on ur.role_id = r.id
+        INNER JOIN role_perm rp on rp.role_id = r.id
+        INNER JOIN permission p on p.id = rp.perm_id
+        WHERE p.perm_type = 1
+        <if test="userId != null">
+            and u.id = #{userId}
+        </if>
+    </select>
+
+    <select id="selectChildPermTree" resultMap="userPermTreeResultMap">
+        SELECT
+            id,
+            perm_name,
+            perm_type,
+            perm_key,
+            perm_url
+        FROM
+            permission
+        WHERE
+            perm_type = 2
+          AND parent_id = #{id}
+    </select>
+
+    <select id="selectPermListByUserId" resultType="java.lang.String">
+        SELECT p.perm_key FROM user u
+            INNER JOIN user_role ur on u.id = ur.user_id
+            INNER JOIN role r on ur.role_id = r.id
+            INNER JOIN role_perm rp on r.id = rp.role_id
+            INNER JOIN permission p on rp.perm_id = p.id
+        WHERE p.perm_type = 3 AND u.id = #{id}
+    </select>
+
+</mapper>
