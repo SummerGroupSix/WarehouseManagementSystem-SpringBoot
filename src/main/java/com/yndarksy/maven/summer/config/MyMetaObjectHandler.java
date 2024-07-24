@@ -22,7 +22,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         Object createTime = getFieldValByName("createTime", metaObject);
         if (ObjectUtils.isEmpty(createTime)) {
-            log.info("开始插入填充...");
+            log.info("开始插入填充创建时间");
             this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
         }
 
@@ -35,7 +35,9 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         Object updateTime = getFieldValByName("updateTime", metaObject);
+
         if(ObjectUtils.isEmpty(updateTime)){
+            log.info("开始插入填充更新时间");
             setFieldValByName("updateTime",LocalDateTime.now(),metaObject);
         }
     }
