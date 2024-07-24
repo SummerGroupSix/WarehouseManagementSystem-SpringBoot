@@ -24,7 +24,7 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
         // String projectPath = System.getProperty("user.dir");
         // gc.setOutputDir(projectPath + "/src/main/java");
-        String projectPath = "D://mybatisCode";
+        String projectPath = "D://JavaTest//MybatisCode2";
         gc.setOutputDir(projectPath);
         gc.setAuthor("YDX");
         //设置完之后是否打开资源管理器
@@ -45,13 +45,13 @@ public class CodeGenerator {
         dsc.setDbType(DbType.MYSQL);
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("ydx56HW2004");
+        dsc.setPassword("123456");
         dsc.setUrl(
                 "jdbc:mysql://localhost:3306/xnsy_summer?useUnicode=true&characterEncoding=utf8&useSSL=false");
         mpg.setDataSource(dsc);
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName("user");// 模块名
+        pc.setModuleName("role");// 模块名
         pc.setParent("com.yndarksy.maven.summer");
         mpg.setPackageInfo(pc);
         // 自定义配置

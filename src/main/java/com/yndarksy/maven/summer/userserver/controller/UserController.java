@@ -181,4 +181,5 @@ public class UserController {
         List<String> strings = userService.selectPermListByUserId(map);
         return new Result<>().success().put(strings);
     }
+
 }

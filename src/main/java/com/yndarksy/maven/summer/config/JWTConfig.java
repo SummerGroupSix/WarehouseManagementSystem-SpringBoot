@@ -39,7 +39,9 @@ public class JWTConfig {
      * @return
      */
     public String getUserName(String token) {
-        if(ObjectUtils.isEmpty(token)) throw new UnAuthException("token为空");
+        if(ObjectUtils.isEmpty(token)){
+            throw new UnAuthException("token为空");
+        }
         return JWT.decode(token).getClaim("username").asString();
     }
 

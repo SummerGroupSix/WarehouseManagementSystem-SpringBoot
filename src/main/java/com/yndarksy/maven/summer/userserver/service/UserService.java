@@ -7,6 +7,7 @@ import com.yndarksy.maven.summer.userserver.dto.LoginUser;
 import com.yndarksy.maven.summer.userserver.dto.QueryPageUser;
 import com.yndarksy.maven.summer.userserver.dto.UpdateUser;
 import com.yndarksy.maven.summer.userserver.dto.addUser;
+import com.yndarksy.maven.summer.userserver.entity.Role;
 import com.yndarksy.maven.summer.userserver.entity.User;
 import com.yndarksy.maven.summer.userserver.vo.UserPermTree;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,4 +65,5 @@ public interface UserService extends IService<User> {
     String getVcode();
 
     List<String>selectPermListByUserId(Map<String, Object>map);
+
 }

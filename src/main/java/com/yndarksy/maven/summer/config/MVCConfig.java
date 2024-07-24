@@ -17,12 +17,12 @@ public class MVCConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/view/**")//设置URL映射路径
-                .addResourceLocations("file:///E:\\UserImg\\");//文件路径
+                .addResourceLocations("file:///D:\\img\\");//文件路径
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtInterceptor).addPathPatterns("/**")
-                .excludePathPatterns("/user/login","/user/vcode","/user/img","/view/**");
+                .excludePathPatterns("/user/login","/user/vcode","/user/img","/view/**","/role/rolepage");
     }
 }

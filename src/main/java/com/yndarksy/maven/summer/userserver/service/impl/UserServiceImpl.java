@@ -9,6 +9,7 @@ import com.yndarksy.maven.summer.userserver.dto.LoginUser;
 import com.yndarksy.maven.summer.userserver.dto.QueryPageUser;
 import com.yndarksy.maven.summer.userserver.dto.UpdateUser;
 import com.yndarksy.maven.summer.userserver.dto.addUser;
+import com.yndarksy.maven.summer.userserver.entity.Role;
 import com.yndarksy.maven.summer.userserver.entity.User;
 import com.yndarksy.maven.summer.userserver.mapper.UserMapper;
 import com.yndarksy.maven.summer.userserver.service.UserService;
@@ -113,7 +114,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public String saveUserImg(MultipartFile multipartFile) {
         //将文件保存到本地
-        String desDir = "E:\\UserImg\\";
+        String desDir = "D:\\img\\";
         String filename = multipartFile.getOriginalFilename();
         String filepath = desDir + File.separator + filename;
         File file = new File(filepath);
@@ -176,4 +177,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public List<String> selectPermListByUserId(Map<String, Object> map) {
         return userMapper.selectPermListByUserId(map);
     }
+
+
 }

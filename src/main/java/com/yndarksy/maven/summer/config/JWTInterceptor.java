@@ -4,6 +4,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.yndarksy.maven.summer.common.MyException.UnAuthException;
 import com.yndarksy.maven.summer.userserver.entity.User;
 import com.yndarksy.maven.summer.userserver.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
+@Slf4j
 @Component
 public class JWTInterceptor implements HandlerInterceptor{
     @Autowired
@@ -24,6 +26,7 @@ public class JWTInterceptor implements HandlerInterceptor{
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String authorization = request.getHeader("Authorization");
+        log.info("url:{}",request.getRequestURI());
         String username = jwtConfig.getUserName(authorization);
         if(ObjectUtils.isEmpty(authorization)){
             throw  new UnAuthException("无token");
