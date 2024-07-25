@@ -2,13 +2,10 @@ package com.yndarksy.maven.summer.userserver.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yndarksy.maven.summer.common.result.Result;
-import com.yndarksy.maven.summer.userserver.dto.LoginUser;
-import com.yndarksy.maven.summer.userserver.dto.QueryPageUser;
-import com.yndarksy.maven.summer.userserver.dto.UpdateUser;
-import com.yndarksy.maven.summer.userserver.dto.addUser;
+import com.yndarksy.maven.summer.userserver.dto.*;
 import com.yndarksy.maven.summer.userserver.entity.User;
 import com.yndarksy.maven.summer.userserver.vo.UserPermTree;
+import com.yndarksy.maven.summer.userserver.vo.UserRoleAndRoleId;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -64,4 +61,7 @@ public interface UserService extends IService<User> {
     String getVcode();
 
     List<String>selectPermListByUserId(Map<String, Object>map);
+
+    List<UserRoleAndRoleId> getUserAndRolePageByUsername(Map<String, Integer> map);
+
 }

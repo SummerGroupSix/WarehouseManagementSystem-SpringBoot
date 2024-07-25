@@ -108,4 +108,11 @@
         WHERE p.perm_type = 3 AND u.id = #{id}
     </select>
 
+    <select id="selectUserAndRoleByUsername" resultType="com.yndarksy.maven.summer.userserver.vo.UserRoleAndRoleId">
+        SELECT ur.user_id,ur.role_id,r.role_name from user as u
+        INNER JOIN user_role as ur on u.id = ur.user_id
+        INNER JOIN  role as r on ur.role_id = r.id
+        where u.id = #{userId}
+    </select>
+
 </mapper>

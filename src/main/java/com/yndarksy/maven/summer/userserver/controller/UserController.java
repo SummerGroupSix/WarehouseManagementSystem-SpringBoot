@@ -12,6 +12,8 @@ import com.yndarksy.maven.summer.userserver.dto.addUser;
 import com.yndarksy.maven.summer.userserver.entity.User;
 import com.yndarksy.maven.summer.userserver.service.UserService;
 import com.yndarksy.maven.summer.userserver.vo.UserPermTree;
+import com.yndarksy.maven.summer.userserver.vo.UserRoleAndRoleId;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.ObjectUtils;
@@ -31,6 +33,7 @@ import java.util.Map;
  * @author YDX
  * @since 2024-07-18
  */
+@Slf4j
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -122,6 +125,18 @@ public class UserController {
         jsonObject.put("total",pageUser.getTotal());
         jsonObject.put("rows",pageUser.getRecords());
         return new Result<>().success().put(jsonObject);
+    }
+
+    @GetMapping("/getUserRoleByUserId")
+    public Result<?> userRolePage(Integer userId){
+        Map<String, Integer> map = new HashMap<>();
+        map.put("userId",userId);
+        List<UserRoleAndRoleId> userAndRolePageByUsername = userService.getUserAndRolePageByUsername(map);
+        log.info(userAndRolePageByUsername.toString());
+
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("")
+        return new Result<>().success().put(userAndRolePageByUsername);
     }
 
     /**

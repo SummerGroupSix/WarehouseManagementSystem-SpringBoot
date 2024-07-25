@@ -5,15 +5,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.yndarksy.maven.summer.common.result.Result;
-import com.yndarksy.maven.summer.userserver.dto.LoginUser;
-import com.yndarksy.maven.summer.userserver.dto.QueryPageUser;
-import com.yndarksy.maven.summer.userserver.dto.UpdateUser;
-import com.yndarksy.maven.summer.userserver.dto.addUser;
+import com.yndarksy.maven.summer.userserver.dto.*;
+import com.yndarksy.maven.summer.userserver.entity.Role;
 import com.yndarksy.maven.summer.userserver.entity.User;
 import com.yndarksy.maven.summer.userserver.mapper.UserMapper;
 import com.yndarksy.maven.summer.userserver.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yndarksy.maven.summer.userserver.vo.UserPermTree;
+import com.yndarksy.maven.summer.userserver.vo.UserRoleAndRoleId;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,6 +104,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return this.page(page,queryWrapper);
     }
 
+    @Override
+    public List<UserRoleAndRoleId> getUserAndRolePageByUsername(Map<String, Integer> map) {
+        return userMapper.selectUserAndRoleByUsername(map);
+    }
+
     /**
      * 用于存储前端传图，并返回URL
      * @param multipartFile
@@ -150,6 +154,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         BeanUtils.copyProperties(user,updateUser);
         return this.updateById(updateUser);
     }
+
 
     /**
      * 获取验证码
