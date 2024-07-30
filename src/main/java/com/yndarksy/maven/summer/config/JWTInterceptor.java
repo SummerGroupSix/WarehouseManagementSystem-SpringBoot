@@ -2,6 +2,7 @@ package com.yndarksy.maven.summer.config;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.yndarksy.maven.summer.common.MyException.UnAuthException;
+import com.yndarksy.maven.summer.context.BaseContext;
 import com.yndarksy.maven.summer.userserver.entity.User;
 import com.yndarksy.maven.summer.userserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ public class JWTInterceptor implements HandlerInterceptor{
         if(!verify){
             throw  new UnAuthException("token验证错误");
         }
+        BaseContext.setCurrentId(user.getId());
         return true;
     }
 }

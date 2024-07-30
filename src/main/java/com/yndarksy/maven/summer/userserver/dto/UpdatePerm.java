@@ -8,6 +8,9 @@ public class UpdatePerm {
     private String permName;
     private String permType;
     private String permKey;
-    //操作人
+    private String permUrl;
+    //创建人
+    private String createBy;
+    //更新人
     private String operator;
 }

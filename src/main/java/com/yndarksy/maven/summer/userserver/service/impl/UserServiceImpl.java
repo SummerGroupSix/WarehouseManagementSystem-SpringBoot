@@ -110,6 +110,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     /**
+     * 通过用户id查找用户信息
+     * @param id
+     * @return
+     */
+    @Override
+    public User selectUserById(Integer id) {
+        User user = userMapper.selectById(id);
+        User formatUser = new User();
+        formatUser.setId(id);
+        formatUser.setAddress(user.getAddress());
+        formatUser.setImgUrl(user.getImgUrl());
+        formatUser.setUsername(user.getUsername());
+        return formatUser;
+    }
+
+    /**
      * 用于存储前端传图，并返回URL
      * @param multipartFile
      * @return
@@ -181,4 +197,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public List<String> selectPermListByUserId(Map<String, Object> map) {
         return userMapper.selectPermListByUserId(map);
     }
+
+
 }

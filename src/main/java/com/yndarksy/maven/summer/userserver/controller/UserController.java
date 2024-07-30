@@ -82,6 +82,16 @@ public class UserController {
     }
 
     /**
+     *  通过用户id查询用户（用户名，头像，地址）
+     * @param id
+     * @return
+     */
+    @GetMapping("/getUserById")
+    public User getUser(Integer id){
+        return userService.selectUserById(id);
+    }
+
+    /**
      * 查找侧边栏信息
      * @param userId
      * @return
@@ -127,6 +137,11 @@ public class UserController {
         return new Result<>().success().put(jsonObject);
     }
 
+    /**
+     * 通过用户id获取角色
+     * @param userId
+     * @return
+     */
     @GetMapping("/getUserRoleByUserId")
     public Result<?> userRolePage(Integer userId){
         Map<String, Integer> map = new HashMap<>();
@@ -150,6 +165,11 @@ public class UserController {
         return new Result<>().success().put(imgUrl);
     }
 
+    /**
+     * 添加用户
+     * @param user
+     * @return
+     */
     @PostMapping("/add")
     public Result<?> addUser(@RequestBody addUser user){
         Boolean s = userService.insertUser(user);
@@ -161,6 +181,11 @@ public class UserController {
         }
     }
 
+    /**
+     * 更新用户
+     * @param user
+     * @return
+     */
     @PostMapping("/update")
     public Result<?> updateUser(@RequestBody UpdateUser user){
         Boolean s = userService.updateUser(user);
@@ -172,6 +197,11 @@ public class UserController {
         }
     }
 
+    /**
+     * 删除用户
+     * @param id
+     * @return
+     */
     @GetMapping("/delete")
     public Result<?> deleteUser(Integer id){
         Boolean s = userService.removeById(id);
@@ -183,12 +213,21 @@ public class UserController {
         }
     }
 
+    /**
+     * 获取token
+     * @return
+     */
     @GetMapping("/vcode")
     public Result<?> getVcode() {
         String vcode = userService.getVcode();
         return new Result<>().success().put(vcode);
     }
 
+    /**
+     * 获取权限
+     * @param id
+     * @return
+     */
     @GetMapping("/permList")
     public Result<?> getPermListByUserId(Integer id) {
         Map<String, Object> map = new HashMap<>();

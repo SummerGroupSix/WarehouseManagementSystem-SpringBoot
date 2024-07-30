@@ -59,4 +59,15 @@ public class PermController {
             return new Result<>().success("删除成功").put(s);
         }
     }
+
+    @PostMapping("/savePerm")
+    public Result<?> savePerm(@RequestBody UpdatePerm permission){
+        int s = permService.savePerm(permission);
+        if (s<=0){
+            return new Result<>().error("插入失败").put(s);
+        }
+        else{
+            return new Result<>().success("插入成功").put(s);
+        }
+    }
 }

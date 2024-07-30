@@ -25,7 +25,6 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
             log.info("开始插入填充创建时间");
             this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
         }
-
     }
 
     /**

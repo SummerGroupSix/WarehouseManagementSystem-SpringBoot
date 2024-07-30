@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yndarksy.maven.summer.userserver.mapper.RoleMapper">
+
+    <!-- 通用查询映射结果 -->
+
+    <resultMap id="BaseResultMap" type="com.yndarksy.maven.summer.userserver.entity.Role">
+        <id column="id" property="id" />
+        <result column="role_code" property="roleCode" />
+        <result column="role_name" property="roleName" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="operator" property="operator" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, role_code, role_name, create_time, create_by, update_time, operator
+    </sql>
+    
+    <resultMap id="RolePermTreeResultMap" type="com.yndarksy.maven.summer.userserver.dto.RolePermTree">
+        <id column="id" property="id"/>
+        <result column="perm_name" property="label"/>
+        <collection property="children" column="{id=id}" ofType="com.yndarksy.maven.summer.userserver.dto.RolePermTree"
+                    select="selectChildRolePermTree">
+            <id column="id" property="id"/>
+            <result column="perm_name" property="label"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectRolePermTree" resultMap="RolePermTreeResultMap">
+        SELECT
+        id,
+        perm_name
+        FROM
+        permission
+        WHERE 1=1
+          <if test = "parentId != null">
+              AND parent_id = #{parentId}
+          </if>
+    </select>
+
+    <select id="selectChildRolePermTree" resultMap="RolePermTreeResultMap">
+        SELECT
+            id,
+            perm_name
+        FROM
+            permission
+        WHERE
+            parent_id = #{id}
+    </select>
+
+</mapper>

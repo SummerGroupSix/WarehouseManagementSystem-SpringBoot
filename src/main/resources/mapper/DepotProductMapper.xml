@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yndarksy.maven.summer.userserver.mapper.DepotProductMapper">
+    <select id="selectDepotProductVO" resultType="com.yndarksy.maven.summer.userserver.vo.DepotProductVO">
+        SELECT
+        p.id AS productId,
+        p.product_name,
+        p.product_price,
+        dp.quantity,
+        dp.update_time,
+        dp.operator_id
+        FROM
+        depot d
+        JOIN depot_product dp ON d.id = dp.depot_id
+        JOIN product p ON dp.product_id = p.id
+        <where>
+            <if test="param.id != null">
+                and dp.depot_id = #{param.id}
+            </if>
+            <if test="param.name != null">
+                and p.product_name like concat('%',#{param.name},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

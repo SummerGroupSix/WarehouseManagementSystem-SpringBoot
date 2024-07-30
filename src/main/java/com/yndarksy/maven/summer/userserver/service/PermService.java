@@ -20,4 +20,11 @@ public interface PermService extends IService<Permission> {
      * @return
      */
     Boolean updatePerm(UpdatePerm perm);
+
+    /**
+     * 添加权限
+     * @param permission
+     * @return
+     */
+    int savePerm(UpdatePerm permission);
 }
