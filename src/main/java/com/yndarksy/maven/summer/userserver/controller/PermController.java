@@ -5,9 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yndarksy.maven.summer.common.result.Result;
 import com.yndarksy.maven.summer.userserver.dto.QueryPagePerm;
 import com.yndarksy.maven.summer.userserver.dto.UpdatePerm;
-import com.yndarksy.maven.summer.userserver.dto.UpdateUser;
 import com.yndarksy.maven.summer.userserver.entity.Permission;
-import com.yndarksy.maven.summer.userserver.entity.User;
 import com.yndarksy.maven.summer.userserver.service.PermService;
 import org.springframework.web.bind.annotation.*;
 

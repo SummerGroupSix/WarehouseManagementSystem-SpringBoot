@@ -6,9 +6,10 @@ import lombok.Data;
 public class UpdatePerm {
     private Integer id;
     private String permName;
-    private String permType;
+    private Integer permType;
     private String permKey;
     private String permUrl;
+    private Integer parentId;
     //创建人
     private String createBy;
     //更新人
